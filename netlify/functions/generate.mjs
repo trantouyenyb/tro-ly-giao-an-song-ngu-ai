@@ -11,7 +11,7 @@ export default async (request) => {
       if(!['image/png','image/jpeg','image/webp','application/pdf'].includes(f.type))return Response.json({error:'AI hiện nhận trực tiếp ảnh và PDF. Với DOCX, hãy dán nội dung vào ô văn bản.'},{status:400});
       parts.push({inline_data:{mime_type:f.type,data:f.data}});
     }
-    const model=process.env.GEMINI_MODEL||'gemini-2.5-flash';
+    const model=process.env.GEMINI_MODEL||'gemini-3.8-flash';
     const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts}],generationConfig:{temperature:0.3,maxOutputTokens:7500}})});
     const data=await res.json();if(!res.ok)throw Error(data.error?.message||'AI API error');
     const result=(data.candidates?.[0]?.content?.parts||[]).map(x=>x.text||'').join('\n');
