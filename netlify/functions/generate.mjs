@@ -12,7 +12,7 @@ export default async (request) => {
       parts.push({inline_data:{mime_type:f.type,data:f.data}});
     }
     const model=process.env.GEMINI_MODEL||'gemini-3.8-flash';
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts}],generationConfig:{temperature:0.3,maxOutputTokens:7500}})});
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts}],generationConfig:{maxOutputTokens:7500}}})});
     const data=await res.json();if(!res.ok)throw Error(data.error?.message||'AI API error');
     const result=(data.candidates?.[0]?.content?.parts||[]).map(x=>x.text||'').join('\n');
     if(!result)throw Error('AI không trả về nội dung');
