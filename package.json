@@ -1,0 +1,11 @@
+{
+  "name": "tro-ly-giao-an-song-ngu-ai",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/lesson.test.mjs"
+  },
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}
